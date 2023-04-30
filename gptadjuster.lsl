@@ -58,7 +58,7 @@ ai_say(string message)
     }
     processing = TRUE;
     llSetTimerEvent(0);
-    string body = llList2Json(JSON_OBJECT, ["model", "gpt-3.5-turbo", "temperature", 0.7, "user", llGetOwner(), "messages", "["+premsg+strhistory+"{\"role\": \"system\", \"content\": \""+preprompt+sys+"\"}]"]);
+    string body = llList2Json(JSON_OBJECT, ["model", "gpt-3.5-turbo", "temperature", 0.7, "presence_penalty", 0.1, "frequency_penalty", 0.1, "user", llGetOwner(), "messages", "["+premsg+strhistory+"{\"role\": \"system\", \"content\": \""+preprompt+sys+"\"}]"]);
 
     // I highly recommend using a proxy configured to forcibly set the return Content-Type to "application/json; charset=utf-8" to work around SL bugs
     http_request_id = llHTTPRequest("https://api.openai.com/v1/chat/completions", [HTTP_METHOD, "POST", HTTP_MIMETYPE, "application/json", HTTP_ACCEPT,"application/json",  HTTP_CUSTOM_HEADER, "Authorization", "Bearer "+apikey], body);
