@@ -1,12 +1,18 @@
+// User variables, change these as you wish!
+// Your OpenAI key, obtained via https://platform.openai.com/account/api-keys
 string apikey = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+
+// How much message history to keep. Shorter history is less expensive, more
+// history lets the AI keep more context!
 integer maxhistory = 10;
-integer processing;
-integer ownerchan;
-integer last_talker_ai;
-key http_request_id;
-string idhash;
+
+// Do you want use input to just be the profile's subconscious or
+// would you prefer to fully rewrite everything the user enters?
+integer subconscious = FALSE;
+
+// Define the AI's profile here! Here's some samples to get you started.
 string myname = "Amilia";
-string prompt = "Amilia is a flirty bimbo maid who speaks with an absurd French accent.";
+string prompt = "Amilia is a flirty maid who speaks with an absurd French accent.";
 //string myname = "Alice";
 //string prompt = "Alice is from Wonderland.";
 //string myname = "Cher";
@@ -17,12 +23,20 @@ string prompt = "Amilia is a flirty bimbo maid who speaks with an absurd French 
 //string prompt = "Scout is from To Kill a Mockingbird.";
 //string myname = "Yoda";
 //string prompt = "";
-//string prompt = "Elle is Elle Woods";
+//string prompt = "Elle is Elle Woods.";
 //string myname = "Elle";
 //string prompt = "Julie is from Valley Girl.";
 //string myname = "Julie";
-//string prompt = "Juliet is from Romeo and Juliet.";
+//string prompt = "Juliet is from the novel Romeo and Juliet.";
 //string myname = "Juliet";
+
+
+// System variables
+integer processing;
+integer ownerchan;
+integer last_talker_ai;
+key http_request_id;
+string idhash;
 list history;
 
 ai_say(string message)
@@ -43,9 +57,13 @@ ai_say(string message)
     {
         // Let the AI come up with something entirely on its own
     }
+    else if (subconscious)
+    {
+        preprompt = myname + " just had the following subconscious thought:\\n===" + message + "\\n===\\n\\n";
+    }
     else
     {
-        preprompt = myname + " just had the following subconscious thought: \\n===" + message + "\\n===\\n\\n";
+        sys = "In under 50 words, rewrite the following as " + myname + ":\\n===" + message + "\\n===";
     }
     string strhistory;
     if (llGetListLength(history))
