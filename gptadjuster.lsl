@@ -26,7 +26,7 @@ list history;
 
 ai_say(string message)
 {
-    string sys = "In under 50 words, speak or act as " + myname + ".";
+    string sys = "In under 50 words, behave as " + myname + ".";
     string preprompt = "";
     if (message == "!reset")
     {
