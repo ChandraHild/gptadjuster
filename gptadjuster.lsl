@@ -2,13 +2,17 @@
 // Your OpenAI key, obtained via https://platform.openai.com/account/api-keys
 string apikey = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
+// URL for accessing the API. I highly recommend using a proxy configured to forcibly
+// set the return Content-Type to "application/json; charset=utf-8" to work around SL bugs
+string api_url = "https://api.openai.com/v1/chat/completions";
+
 // How much message history to keep. Shorter history is less expensive, more
 // history lets the AI keep more context!
 integer maxhistory = 10;
 
 // Do you want use input to just be the profile's subconscious or
 // would you prefer to fully rewrite everything the user enters?
-integer subconscious = FALSE;
+integer subconscious = TRUE;
 
 // Define the AI's profile here! Here's some samples to get you started.
 string myname = "Amilia";
@@ -79,8 +83,7 @@ ai_say(string message)
     llSetTimerEvent(0);
     string body = llList2Json(JSON_OBJECT, ["model", "gpt-3.5-turbo", "temperature", 0.7, "presence_penalty", 0.1, "frequency_penalty", 0.1, "user", idhash, "messages", "["+premsg+strhistory+"{\"role\": \"system\", \"content\": \""+preprompt+sys+"\"}]"]);
 
-    // I highly recommend using a proxy configured to forcibly set the return Content-Type to "application/json; charset=utf-8" to work around SL bugs
-    http_request_id = llHTTPRequest("https://api.openai.com/v1/chat/completions", [HTTP_METHOD, "POST", HTTP_MIMETYPE, "application/json", HTTP_ACCEPT,"application/json",  HTTP_CUSTOM_HEADER, "Authorization", "Bearer "+apikey], body);
+    http_request_id = llHTTPRequest(api_url, [HTTP_METHOD, "POST", HTTP_MIMETYPE, "application/json", HTTP_ACCEPT,"application/json",  HTTP_CUSTOM_HEADER, "Authorization", "Bearer "+apikey], body);
 }
 
 default
