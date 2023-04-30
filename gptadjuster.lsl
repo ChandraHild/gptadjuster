@@ -4,6 +4,7 @@ integer processing;
 integer ownerchan;
 integer last_talker_ai;
 key http_request_id;
+string idhash;
 string myname = "Amilia";
 string prompt = "Amilia is a flirty bimbo maid who speaks with an absurd French accent.";
 //string myname = "Alice";
@@ -58,7 +59,7 @@ ai_say(string message)
     }
     processing = TRUE;
     llSetTimerEvent(0);
-    string body = llList2Json(JSON_OBJECT, ["model", "gpt-3.5-turbo", "temperature", 0.7, "presence_penalty", 0.1, "frequency_penalty", 0.1, "user", llGetOwner(), "messages", "["+premsg+strhistory+"{\"role\": \"system\", \"content\": \""+preprompt+sys+"\"}]"]);
+    string body = llList2Json(JSON_OBJECT, ["model", "gpt-3.5-turbo", "temperature", 0.7, "presence_penalty", 0.1, "frequency_penalty", 0.1, "user", idhash, "messages", "["+premsg+strhistory+"{\"role\": \"system\", \"content\": \""+preprompt+sys+"\"}]"]);
 
     // I highly recommend using a proxy configured to forcibly set the return Content-Type to "application/json; charset=utf-8" to work around SL bugs
     http_request_id = llHTTPRequest("https://api.openai.com/v1/chat/completions", [HTTP_METHOD, "POST", HTTP_MIMETYPE, "application/json", HTTP_ACCEPT,"application/json",  HTTP_CUSTOM_HEADER, "Authorization", "Bearer "+apikey], body);
@@ -69,6 +70,7 @@ default
     state_entry()
     {
         ownerchan = (integer)llFrand(500) + 1000;
+        idhash = llSHA256String(llGetOwner());
         llListen(0,"",NULL_KEY,"");
         llListen(ownerchan,"",llGetOwner(),"");
         llOwnerSay("@clear,redirchat:"+(string)ownerchan+"=add,rediremote:"+(string)ownerchan+"=add");
