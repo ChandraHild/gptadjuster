@@ -95,6 +95,10 @@ default
     listen(integer c, string n, key id, string t)
     {
         //if(id != llGetOwnerKey(id)) return;
+        if (id == llGetOwnerKey(id))
+        {
+            n = llGetDisplayName(id);
+        }
         t = llReplaceSubString(t, "\\", "\\\\", 0);
         t = llReplaceSubString(t, "\"", "\\\"", 0);
         t = llReplaceSubString(t, "\n", "\\n", 0);
