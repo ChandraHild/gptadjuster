@@ -35,7 +35,7 @@ ai_say(string message)
     }
     else if (last_talker_ai && llGetTime() < 30)
     {
-        llOwnerSay("It's not your turn!");
+        llOwnerSay("You may speak again in " + (string)(30-(integer)llGetTime()) + " seconds.");
         return;
     }
     else if (message == "...")
@@ -44,7 +44,7 @@ ai_say(string message)
     }
     else
     {
-         preprompt = myname + " just had the following subconscious thought: \\n===" + message + "\\n===\\n\\n";
+        preprompt = myname + " just had the following subconscious thought: \\n===" + message + "\\n===\\n\\n";
     }
     string strhistory;
     if (llGetListLength(history))
@@ -54,7 +54,7 @@ ai_say(string message)
     string premsg = "";
     if (prompt)
     {
-         premsg = "{\"role\": \"system\", \"content\": \""+prompt+"\"},";
+        premsg = "{\"role\": \"system\", \"content\": \""+prompt+"\"},";
     }
     processing = TRUE;
     llSetTimerEvent(0);
