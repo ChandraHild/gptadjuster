@@ -67,7 +67,7 @@ ai_say(string message)
     }
     else
     {
-        sys = "In under 50 words, rewrite the following as " + myname + ":\\n===" + message + "\\n===";
+        sys = "In under 50 words, behave as" + myname + " including a rewrite of:\\n===" + message + "\\n===";
     }
     string strhistory;
     if (llGetListLength(history))
