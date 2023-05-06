@@ -16,22 +16,22 @@ integer subconscious = TRUE;
 
 // Define the AI's profile here! Here's some samples to get you started.
 string myname = "Amilia";
-string prompt = "Amilia is a flirty maid who speaks with an absurd French accent.";
+string prompt = "You are Amilia, a flirty maid who speaks with an absurd French accent.";
 //string myname = "Alice";
-//string prompt = "Alice is from Wonderland.";
+//string prompt = "You are Alice from Wonderland.";
 //string myname = "Cher";
-//string prompt = "Cher is from Clueless.";
+//string prompt = "You are Cher from Clueless.";
 //string myname = "Gollum";
-//string prompt = "";
+//string prompt = "You are Gollum.";
 //string myname = "Scout";
-//string prompt = "Scout is from To Kill a Mockingbird.";
+//string prompt = "You are Scout from To Kill a Mockingbird.";
 //string myname = "Yoda";
-//string prompt = "";
-//string prompt = "Elle is Elle Woods.";
+//string prompt = "You are Yoda.";
+//string prompt = "You are Elle Woods.";
 //string myname = "Elle";
-//string prompt = "Julie is from Valley Girl.";
+//string prompt = "You are Julie from Valley Girl.";
 //string myname = "Julie";
-//string prompt = "Juliet is from the novel Romeo and Juliet.";
+//string prompt = "You are Juliet from the novel Romeo and Juliet.";
 //string myname = "Juliet";
 
 
@@ -63,11 +63,11 @@ ai_say(string message)
     }
     else if (subconscious)
     {
-        preprompt = myname + " just had the following subconscious thought:\\n===" + message + "\\n===\\n\\n";
+        preprompt = "You just had the following subconscious thought:\\n===" + message + "\\n===\\n\\n";
     }
     else
     {
-        sys = "In under 50 words, behave as" + myname + " including a rewrite of:\\n===" + message + "\\n===";
+        sys = "In under 50 words, rewrite the following as if it was you:\\n===" + message + "\\n===";
     }
     string strhistory;
     if (llGetListLength(history))
